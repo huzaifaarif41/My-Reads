@@ -1,7 +1,6 @@
 import React from 'react';
-import { update } from './../BooksAPI';
 
-function BookItems(props) {
+function BookItems({ book, selectedValue }) {
   return (
     <div className='book'>
       <div className='book-top'>
@@ -10,11 +9,16 @@ function BookItems(props) {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${props.book.imageLinks.thumbnail})`,
+            backgroundImage: `url(${
+              book.imageLinks ? book.imageLinks.thumbnail : ''
+            })`,
           }}
         />
         <div className='book-shelf-changer'>
-          <select >
+          <select
+            value={book.shelf}
+            onChange={(e) => selectedValue(book, e.target.value)}
+          >
             <option value='move' disabled>
               Move to...
             </option>
@@ -25,11 +29,10 @@ function BookItems(props) {
           </select>
         </div>
       </div>
-      <div className='book-title'>{props.book.title}</div>
-      <div className='book-authors'>{props.book.authors}</div>
+      <div className='book-title'>{book.title}</div>
+      <div className='book-authors'>{book.authors}</div>
     </div>
   );
 }
-
 
 export default BookItems;
